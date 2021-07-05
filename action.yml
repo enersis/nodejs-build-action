@@ -26,6 +26,14 @@ inputs:
   msteams-webhook:
     description: 'Microsoft Teams Webhook for notifications'
     required: false
+  dockerfile:
+    description: 'Path to dockerfile'
+    required: false
+    default: './Dockerfile'
+  push-image:
+    description: 'Determine of should push image'
+    required: false
+    default: true
 runs:
   ## Replace that when officially supported by GitHub
   using: "includes"
@@ -55,8 +63,8 @@ runs:
     - name: Build and publish container image with tag
       uses: docker/build-push-action@v2
       with:
-          push: true
+          push: ${{ inputs.push-image }}
           context: .
           build-args: "NPM_TOKEN=${{ inputs.npm-auth-token }}"
-          file: ./Dockerfile
+          file: ${{ inputs.dockerfile }}
           tags: ${{ inputs.image }}:${{ steps.build-id.outputs.id }}
