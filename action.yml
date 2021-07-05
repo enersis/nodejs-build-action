@@ -24,6 +24,8 @@ inputs:
     description: 'Microsoft Teams Webhook for notifications'
     required: false
 runs:
+  ## Replace that when officially supported by GitHub
+  using: "includes"
   # using: "composite"
   steps:
     - name: Configure AWS credentials
