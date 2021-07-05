@@ -48,3 +48,11 @@ runs:
           build-args: "NPM_TOKEN=${{ inputs.npm-auth-token }}"
           file: ./Dockerfile
           tags: ${{ inputs.image }}:${{ steps.build-id.outputs.id }}
+    - name: Notify the boys
+      if: ${{ inputs.msteams-webhook != '' }}
+      uses: toko-bifrost/ms-teams-deploy-card@master
+      with:
+        github-token: ${{ github.token }}
+        webhook-uri: ${{ inputs.msteams-webhook }}
+
+
