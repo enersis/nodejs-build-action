@@ -20,7 +20,6 @@ inputs:
   npm-auth-token:
     description: 'NPM auth token'
     required: true
-    default: "${{ secrets.NPM_AUTH_TOKEN }}"
 runs:
   using: "composite"
   steps:
