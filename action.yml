@@ -20,6 +20,9 @@ inputs:
   npm-auth-token:
     description: 'NPM auth token'
     required: true
+  notify:
+    required: false
+    default: false
   msteams-webhook:
     description: 'Microsoft Teams Webhook for notifications'
     required: false
@@ -49,10 +52,8 @@ runs:
           file: ./Dockerfile
           tags: ${{ inputs.image }}:${{ steps.build-id.outputs.id }}
     - name: Notify the boys
-      if: inputs.msteams-webhook
+      if: inputs.notify
       uses: toko-bifrost/ms-teams-deploy-card@master
       with:
         github-token: ${{ github.token }}
         webhook-uri: ${{ inputs.msteams-webhook }}
-
-
