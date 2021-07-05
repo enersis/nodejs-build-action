@@ -31,6 +31,15 @@ runs:
   using: "includes"
   # using: "composite"
   steps:
+    - name: Notify the boys
+      if: always() && inputs.notify
+      uses: toko-bifrost/ms-teams-deploy-card@master
+      with:
+        github-token: ${{ github.token }}
+        webhook-uri: ${{ inputs.msteams-webhook }}
+        timezone: "Europe/Berlin"
+        show-on-start: false
+        card-layout-exit: "complete"
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -51,9 +60,3 @@ runs:
           build-args: "NPM_TOKEN=${{ inputs.npm-auth-token }}"
           file: ./Dockerfile
           tags: ${{ inputs.image }}:${{ steps.build-id.outputs.id }}
-    - name: Notify the boys
-      if: always() && inputs.notify
-      uses: toko-bifrost/ms-teams-deploy-card@master
-      with:
-        github-token: ${{ github.token }}
-        webhook-uri: ${{ inputs.msteams-webhook }}
